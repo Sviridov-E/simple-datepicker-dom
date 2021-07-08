@@ -1,0 +1,208 @@
+@import url("minireset.css");
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+$btn-color-hover: #3478f5;
+$btn-cancel-color-hover: #f36363;
+$btn-color: #c6c6c6;
+
+$active-cell-color: #3478f5;
+
+$weekdays-color: #c6c6c6;
+$arrow-color: #3a77e4;
+body {
+    background: grey;
+}
+.datepicker {
+    font-family: "Inter", Sans-serif;
+    box-shadow: 2px 2px 15px 0px rgb(94, 94, 94);
+    position: absolute;
+    padding: 1em;
+    opacity: 1;
+    transition: all .2s 0s ease-in-out;
+    background: white;
+    border-radius: 5px;
+    .head {
+        display: flex;
+        justify-content: space-between;
+        margin-top: -.5em;
+        .selectors {
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            width: 70%;
+            ul.list {
+                position: absolute;
+                top: 0;
+                left: 0;
+                max-height: 300px;
+                background: white;
+                box-shadow: 2px 2px 15px 0px rgb(224, 224, 224);
+                overflow-y: auto;
+                z-index: 100;
+                li {
+                    font-size: 0.9rem;
+                    font-weight: normal;
+                    cursor: pointer;
+                    padding: 4px 8px;
+                    border-radius: 4px;
+                    &:hover {
+                        background-color: $arrow-color;
+                        color: white;
+                    }
+                }
+            }
+            .month {
+                position: relative;
+                min-width: 70px;
+                h4 {
+                    font-weight: bold;
+                    margin-right: 10px;
+                    cursor: pointer;
+                    transition: opacity 0.2s 0s linear;
+                }
+            }
+            .year {
+                position: relative;
+                h4 {
+                    cursor: pointer;
+                    transition: opacity 0.2s 0s linear;
+                }
+                .year-list {
+                    li {
+                        padding: 4px 15px;
+                    }
+                }
+            }
+        }
+        .hidden {
+            height: 0px;
+            overflow: hidden;
+            z-index: 0;
+          }
+        .flipers {
+            button {
+                display: inline-block;
+                height: 40px;
+                width: 40px;
+                border: none;
+                background-color: white;
+                background-size: 50%;
+                background-position: center;
+                background-repeat: no-repeat;
+                outline: none;
+                transition: transform 0.1s 0s linear;
+                &:hover {
+                    transform: scale(1.1);
+                }
+                cursor: pointer;
+                &.right {
+                    background-image: url("./img/arrow-right.svg");
+                }
+                &.left {
+                    background-image: url("./img/arrow-left.svg");
+                }
+            }
+        }
+    }
+    .body {
+        height: 204px;
+        display: flex;
+        align-items: center;
+        table {
+            empty-cells: show;
+            position: relative;
+        }
+        thead {
+            td {
+                font-size: 0.7rem;
+                color: $weekdays-color;
+                text-transform: uppercase;
+            }
+        }
+        tbody {
+            transition: all .1s 0s linear;
+            opacity: 0;
+            &.visible {
+                opacity: 1;
+            }
+            td {
+                line-height: 2rem;
+                width: 2.6rem;
+                font-size: 1.1rem;
+                transition: transform 0.1s 0s linear;
+                &:not(.empty) {
+                    cursor: pointer;
+                }
+                &:not(.empty):hover {
+                    transform: scale(1.1);
+                }
+                &.selected-cell {
+                    background: $active-cell-color;
+                    font-weight: bold;
+                    color: #fff;
+                    border-radius: 10px 4px;
+                }
+                &.month-tail {
+                    color: $weekdays-color;
+                }
+            }
+        }
+        td {
+            width: 2em;
+            text-align: center;
+            color: black;
+        }
+    }
+    .bottom {
+        text-align: right;
+        margin-top: 10px;
+        .btn {
+            display: inline-block;
+            background: transparent;
+            border: 2px solid $btn-color;
+            color: $btn-color;
+            text-transform: uppercase;
+            font-weight: bold;
+            border-radius: 6px;
+            padding: 0.4rem 1rem;
+            transition: all 0.1s 0s linear;
+            letter-spacing: 1px;
+            font-family: "Inter", Sans-serif;
+            cursor: pointer;
+            &:first-of-type {
+                margin-right: 10px;
+            }
+            &:hover {
+                color: $btn-color-hover;
+                border: 2px solid $btn-color-hover;
+            }
+            &:active {
+                color: white;
+                border: 2px solid $btn-color-hover;
+                background-color: $btn-color-hover;
+            }
+            &:focus {
+                outline: none;
+            }
+        }
+        .cancel-btn {
+            &:hover {
+                color: $btn-cancel-color-hover;
+                border: 2px solid $btn-cancel-color-hover;
+            }
+            &:active {
+                color: white;
+                border: 2px solid $btn-cancel-color-hover;
+                background-color: $btn-cancel-color-hover;
+            }
+        }
+    }
+    &.closing {
+        opacity: 0;
+    }
+    &.closed {
+        visibility: hidden;
+        height: 0;
+        opacity: 0;
+    }
+}
