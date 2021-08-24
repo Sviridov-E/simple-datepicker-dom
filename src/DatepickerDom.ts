@@ -5,7 +5,7 @@ import { MonthTails, Slice } from "simple-datepicker/dist/types";
 
 const defaultOptions: Options = {
     closeWhenSelected: false,
-    showMonthTails: false,
+    showMonthTails: true,
 };
 class DatepickerDom {
     core: DatepickerCore;
@@ -51,16 +51,16 @@ class DatepickerDom {
         this.state.datepickerIsOpen = true;
     }
     closeDatepicker(): void {
-        if(!this.state.datepickerIsOpen) return;
+        if (!this.state.datepickerIsOpen) return;
         const datepicker = this.pickerElements.datepickerElement;
-        datepicker.addEventListener('transitionend', addClosed);
+        datepicker.addEventListener("transitionend", addClosed);
         datepicker.classList.add("closing");
         this.state.datepickerIsOpen = false;
         function addClosed(e) {
-            if(e.target !== datepicker) return;
+            if (e.target !== datepicker) return;
             datepicker.classList.add("closed");
-            datepicker.classList.remove('closing');
-            datepicker.removeEventListener('transitionend', addClosed)
+            datepicker.classList.remove("closing");
+            datepicker.removeEventListener("transitionend", addClosed);
         }
     }
 
@@ -139,7 +139,7 @@ class DatepickerDom {
 
     // Triggers when a Cancel button is clicked
     cancleHandler(): void {
-        this.closeDatepicker();        
+        this.closeDatepicker();
     }
 
     // Returns the DOM table body from cash or calculates new
@@ -157,44 +157,77 @@ class DatepickerDom {
     // builds the DOM Table Body with dates
     _buildTableBody(slice: Slice, date: [number, number]): HTMLTableBody {
         const tableBody: HTMLTableSectionElement = document.createElement("tbody");
-        // If showing month tails
+
         let tails: MonthTails;
         if (this.params.showMonthTails) {
             tails = this.core.getMonthTails(...date);
+
+            // if month starts with monday, show full last week of prev month;
+            const firstDayIsMonday: boolean = !!slice[0][0];
+            if (firstDayIsMonday) {
+                const rowElement: HTMLTableRowElement = document.createElement("tr");
+                tails.prev.forEach((date) => {
+                    const dayElement = createDateCell(date, "month-tail");
+                    rowElement.append(dayElement);
+                });
+                tableBody.append(rowElement);
+            }
         }
-        /////////////////////////
 
         slice.forEach((week, ind) => {
             const rowElement: HTMLTableRowElement = document.createElement("tr");
             for (let i = 0; i < 7; ++i) {
                 let day: number | undefined = week[i];
-                const dayElement: HTMLTableCellElement = document.createElement("td");
+                let dayElement: HTMLTableCellElement;
                 const isEmpty: boolean = !day;
                 if (isEmpty) {
                     // If showing month tails
                     if (this.params.showMonthTails) {
                         day = ind ? tails.next[i] : tails.prev[i];
-                        dayElement.classList.add("month-tail");
+                        dayElement = createDateCell(day, "month-tail");
                     }
                     /////////////////////////
-                    else dayElement.classList.add("empty");
+                    else {
+                        dayElement = createDateCell(null, "empty");
+                    }
+                } else {
+                    dayElement = createDateCell(day);
                 }
-                dayElement.insertAdjacentText("afterbegin", day ? String(day) : "");
                 rowElement.append(dayElement);
             }
             tableBody.append(rowElement);
-        });      
+        });
+
+        // if last day in month is sunday and month tails are shown;
+        if (this.params.showMonthTails && slice[slice.length - 1][6]) {
+            tails = this.core.getMonthTails(...date);
+            const rowElement: HTMLTableRowElement = document.createElement("tr");
+            tails.next.forEach((date) => {
+                const dayElement = createDateCell(date, "month-tail");
+                rowElement.append(dayElement);
+            });
+            tableBody.append(rowElement);
+        }
+
+        function createDateCell(index: number | null, addedClass?: string): HTMLTableCellElement {
+            const dayElement: HTMLTableCellElement = document.createElement("td");
+            addedClass && dayElement.classList.add(addedClass);
+            if (!index) return dayElement;
+
+            dayElement.insertAdjacentText("beforeend", String(index));
+            return dayElement;
+        }
         return tableBody;
     }
 
     // Removes table body
     resetTableBody(cb: () => void): void {
         const tbody: HTMLTableBody = this.pickerElements.tableElement?.querySelector("tbody");
-        tbody?.classList.remove('visible');
-        tbody?.addEventListener('transitionend', deleteChangingClass)
+        tbody?.classList.remove("visible");
+        tbody?.addEventListener("transitionend", deleteChangingClass);
         function deleteChangingClass(e) {
-            if(e.target !== tbody) return;            
-            tbody.removeEventListener('transitionend', deleteChangingClass);
+            if (e.target !== tbody) return;
+            tbody.removeEventListener("transitionend", deleteChangingClass);
             tbody?.remove();
             cb();
         }
@@ -204,11 +237,11 @@ class DatepickerDom {
     appendTableBody(): void {
         const date: Date = this.core.shownDate;
         const tbody: HTMLTableBody = this.getTableBody(date.getMonth(), date.getFullYear());
-        
-        this.pickerElements.tableElement?.append(tbody); 
-        setTimeout(() => tbody.classList.add('visible'), 0)
+
+        this.pickerElements.tableElement?.append(tbody);
+        setTimeout(() => tbody.classList.add("visible"), 0);
     }
-    
+
     // Removes table body, gets new and mounts;
     updateTableBody(): void {
         this.resetTableBody(this.appendTableBody.bind(this));
