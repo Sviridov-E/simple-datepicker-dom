@@ -14,8 +14,10 @@ class DatepickerDom {
     selectedCells: HTMLElement | null;
     params: Options;
     state: State;
+    root: HTMLElement;
     constructor(root: HTMLElement, params?: Options) {
         this.params = { ...defaultOptions, ...params };
+        this.root = root;
         this.core = new DatepickerCore();
 
         // State //////////////////////
@@ -41,6 +43,7 @@ class DatepickerDom {
     // Mounts the datepicker element to the DOM
     mount(root: HTMLElement, element: HTMLElement) {
         root.after(element);
+        this.toPosition();
         root.addEventListener("click", () => {
             if (this.state.datepickerIsOpen) return;
             this.openDatepicker();
@@ -245,6 +248,56 @@ class DatepickerDom {
     // Removes table body, gets new and mounts;
     updateTableBody(): void {
         this.resetTableBody(this.appendTableBody.bind(this));
+    }
+
+    toPosition(): void {
+        const inputCoords = this.root.getBoundingClientRect();
+        const inputPosition = {
+            top: inputCoords.top + window.pageYOffset,
+            bottom: inputCoords.bottom + window.pageYOffset,
+            left: inputCoords.left + window.pageXOffset,
+            right: inputCoords.right + window.pageXOffset,
+        };
+        const pickerSize = {
+            height: this.pickerElements.datepickerElement.offsetHeight,
+            width: this.pickerElements.datepickerElement.offsetWidth
+        }
+        const documentSize = {
+            height: Math.max(
+                document.body.scrollHeight,
+                document.documentElement.scrollHeight,
+                document.body.offsetHeight,
+                document.documentElement.offsetHeight,
+                document.body.clientHeight,
+                document.documentElement.clientHeight
+            ),
+            width: Math.max(
+                document.body.scrollWidth,
+                document.documentElement.scrollWidth,
+                document.body.offsetWidth,
+                document.documentElement.offsetWidth,
+                document.body.clientWidth,
+                document.documentElement.clientWidth
+            )
+        };
+
+        let balancer = {
+            top: 0,
+            left: 0
+        }
+
+        if(inputPosition.top + pickerSize.height > documentSize.height) {
+            balancer.top = documentSize.height - (inputPosition.top + pickerSize.height)
+        }
+        if(inputPosition.left + pickerSize.width > documentSize.width) {
+            balancer.left = documentSize.width - (inputPosition.left + pickerSize.width)
+        }
+        this.pickerElements.datepickerElement.style.top = String(inputPosition.top + balancer.top) + "px";
+        this.pickerElements.datepickerElement.style.left = String(inputPosition.left + balancer.left) + "px";
+
+        /* 
+
+        */
     }
 
     // Adds all event listeners
