@@ -7,6 +7,7 @@ const defaultOptions: Options = {
     closeWhenSelected: false,
     showMonthTails: true,
     size: '',
+    lang: 'en'
 };
 class DatepickerDom {
     core: DatepickerCore;
@@ -33,7 +34,7 @@ class DatepickerDom {
 
         this._buildTableBody = this._buildTableBody.bind(this);
 
-        this.pickerElements = buildSheet({size: this.params.size});
+        this.pickerElements = buildSheet({size: this.params.size, lang: this.params.lang});
 
         this.appendTableBody();
         this.updateSelectors();

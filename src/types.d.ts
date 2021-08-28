@@ -27,6 +27,7 @@ export interface Options {
     closeWhenSelected?: boolean;
     showMonthTails?: boolean;
     size?: '' | 'large' | 'small';
+    lang?: '' | 'en' | 'ru';
 }
 export interface MonthLists {
     [key: string]: Array<string>;

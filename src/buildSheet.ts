@@ -1,7 +1,7 @@
 import { ActionElements, MonthLists, TableElements } from "./types";
 
 interface Options {
-    lang?: string;
+    lang?: "" | "ru" | "en";
     years?: [number, number];
     size?: "" | "large" | "small";
 }
@@ -78,13 +78,7 @@ function buildSheet(opt: Options = {}): TableElements {
       <table>
         <thead>
           <tr>
-            <td>Mon</td>
-            <td>Tue</td>
-            <td>Wed</td>
-            <td>Thu</td>
-            <td>Fri</td>
-            <td>Sat</td>
-            <td>Sun</td>
+          ${days[options.lang].reduce((str, day) => str + `<td>${day}</td>`, '')}
           </tr>
         </thead>
       </table>
