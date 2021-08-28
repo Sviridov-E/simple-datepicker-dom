@@ -1,8 +1,9 @@
 import { ActionElements, MonthLists, TableElements } from "./types";
 
 interface Options {
-    lang: string;
-    years: [number, number];
+    lang?: string;
+    years?: [number, number];
+    size?: "" | "large" | "small";
 }
 
 const months: { [key: string]: Array<string> } = {
@@ -43,8 +44,9 @@ const days: { [key: string]: Array<string> } = {
 const defaultOptions: Options = {
     lang: "en",
     years: [1980, new Date().getFullYear()],
+    size: ""
 };
-function buildSheet(opt: Options = defaultOptions): TableElements {
+function buildSheet(opt: Options = {}): TableElements {
     const options = { ...defaultOptions, ...opt };
 
     let years: number[] = [];
@@ -94,6 +96,7 @@ function buildSheet(opt: Options = defaultOptions): TableElements {
   `;
     const datepickerElement: HTMLDivElement = document.createElement("div");
     datepickerElement.classList.add("datepicker");
+    options.size && datepickerElement.classList.add(options.size);
     datepickerElement.classList.add("closed");
 
     datepickerElement.innerHTML = template;
@@ -108,7 +111,7 @@ function buildSheet(opt: Options = defaultOptions): TableElements {
     const tableElement: HTMLTableElement | null = datepickerElement.querySelector(".body table");
 
     const titles = {
-      months: months[opt.lang]
+      months: months[options.lang]
     }
 
     return { datepickerElement, actionElements, tableElement, titles };

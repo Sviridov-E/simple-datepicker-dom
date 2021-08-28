@@ -20,13 +20,97 @@ body {
     position: absolute;
     padding: 1em;
     opacity: 1;
-    transition: all .2s 0s ease-in-out;
+    transition: all 0.2s 0s ease-in-out;
     background: white;
     border-radius: 5px;
+    font-size: 16px;
+    &.small {
+        width: 260px;
+        height: 252px;
+        padding: calc(1em * 0.8);
+        font-size: 14px;
+        .head {
+            .selectors {
+                width: 60%;
+                font-size: 16px;
+            }
+            .flipers {
+                button {
+                    width: 36px;
+                    height: 36px;
+                }
+            }
+        }
+        .body {
+            height: 170px;
+            table {
+                tbody {
+                    tr {
+                        td {
+                            line-height: 1.6em;
+                            width: 2.2em;
+                            font-size: 1.2em;
+                        }
+                    }
+                }
+            }
+        }
+        footer.bottom {
+            margin-top: 5px;
+            button {
+                &:first-of-type {
+                    margin-right: 7px;
+                }
+                padding: .3em .9em;
+                font-size: .9em;
+            }
+        }
+    }
+    &.large {
+        width: 346px;
+        height: 357px;
+        padding: calc(1em * 1.1);
+        font-size: 18px;
+        .head {
+            .selectors {
+                width: 60%;
+            }
+            .flipers {
+                button {
+                    width: 44px;
+                    height: 44px;
+                }
+            }
+        }
+        .body {
+            height: 220px;
+            table {
+                tbody {
+                    tr {
+                        td {
+                            line-height: 1.6em;
+                            width: 2.2em;
+                            font-size: 1.2em;
+                        }
+                    }
+                }
+            }
+        }
+        footer.bottom {
+            margin-top: 20px;
+            button {
+                &:first-of-type {
+                    margin-right: 12px;
+                }
+                padding: .3em .9em;
+                font-size: .9em;
+            }
+        }
+    }
     .head {
         display: flex;
         justify-content: space-between;
-        margin-top: -.5em;
+        margin-top: -0.5em;
         .selectors {
             display: flex;
             justify-content: left;
@@ -43,7 +127,7 @@ body {
                 overflow-y: auto;
                 z-index: 100;
                 li {
-                    font-size: 0.9rem;
+                    font-size: 0.9em;
                     font-weight: normal;
                     cursor: pointer;
                     padding: 4px 8px;
@@ -81,7 +165,7 @@ body {
             height: 0px;
             overflow: hidden;
             z-index: 0;
-          }
+        }
         .flipers {
             button {
                 display: inline-block;
@@ -117,21 +201,21 @@ body {
         }
         thead {
             td {
-                font-size: 0.7rem;
+                font-size: 0.7em;
                 color: $weekdays-color;
                 text-transform: uppercase;
             }
         }
         tbody {
-            transition: all .1s 0s linear;
+            transition: all 0.1s 0s linear;
             opacity: 0;
             &.visible {
                 opacity: 1;
             }
             td {
                 line-height: 2rem;
-                width: 2.6rem;
-                font-size: 1.1rem;
+                width: 2.6em;
+                font-size: 1.1em;
                 transition: transform 0.1s 0s linear;
                 &:not(.empty) {
                     cursor: pointer;
@@ -167,7 +251,7 @@ body {
             text-transform: uppercase;
             font-weight: bold;
             border-radius: 6px;
-            padding: 0.4rem 1rem;
+            padding: 0.4em 1em;
             transition: all 0.1s 0s linear;
             letter-spacing: 1px;
             font-family: "Inter", Sans-serif;
@@ -208,4 +292,8 @@ body {
         height: 0;
         opacity: 0;
     }
+}
+
+input {
+    margin: 30px;
 }

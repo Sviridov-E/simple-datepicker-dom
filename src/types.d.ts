@@ -24,8 +24,9 @@ export interface TableElements {
       }
 }
 export interface Options {
-    closeWhenSelected: boolean;
-    showMonthTails: boolean;
+    closeWhenSelected?: boolean;
+    showMonthTails?: boolean;
+    size?: '' | 'large' | 'small';
 }
 export interface MonthLists {
     [key: string]: Array<string>;

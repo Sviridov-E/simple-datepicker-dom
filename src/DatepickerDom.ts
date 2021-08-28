@@ -6,6 +6,7 @@ import { MonthTails, Slice } from "simple-datepicker/dist/types";
 const defaultOptions: Options = {
     closeWhenSelected: false,
     showMonthTails: true,
+    size: '',
 };
 class DatepickerDom {
     core: DatepickerCore;
@@ -32,7 +33,7 @@ class DatepickerDom {
 
         this._buildTableBody = this._buildTableBody.bind(this);
 
-        this.pickerElements = buildSheet();
+        this.pickerElements = buildSheet({size: this.params.size});
 
         this.appendTableBody();
         this.updateSelectors();
@@ -43,13 +44,13 @@ class DatepickerDom {
     // Mounts the datepicker element to the DOM
     mount(root: HTMLElement, element: HTMLElement) {
         root.after(element);
-        this.toPosition();
         root.addEventListener("click", () => {
             if (this.state.datepickerIsOpen) return;
             this.openDatepicker();
         });
     }
     openDatepicker(): void {
+        this.toPosition();
         this.pickerElements.datepickerElement.classList.remove("closed");
         this.state.datepickerIsOpen = true;
     }
