@@ -1,7 +1,7 @@
-import DatepickerCore from "simple-datepicker";
+import DatepickerCore from "@segor/simple-datepicker";
 import { HTMLTableBody, Options, State, TableBodyCash, TableElements } from "./types";
 import buildSheet from "./buildSheet";
-import { MonthTails, Slice } from "simple-datepicker/dist/types";
+import { MonthTails, Slice } from "@segor/simple-datepicker/dist/types/types";
 
 const defaultOptions: Options = {
     closeWhenSelected: false,

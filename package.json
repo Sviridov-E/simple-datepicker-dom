@@ -9,9 +9,8 @@
     "build": "parcel build index.html"
   },
   "dependencies": {
-    "minireset.css": "^0.0.7",
-    "simple-datepicker": "../simple-datepicker"
-    
+    "@segor/simple-datepicker": "^1.0.1",
+    "minireset.css": "^0.0.7"
   },
   "devDependencies": {
     "parcel-bundler": "^1.12.5",

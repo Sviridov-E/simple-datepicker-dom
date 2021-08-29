@@ -1,4 +1,4 @@
-import { ActionElements, MonthLists, TableElements } from "./types";
+import { ActionElements, TableElements } from "./types";
 
 interface Options {
     lang?: "" | "ru" | "en";
