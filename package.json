@@ -1,12 +1,13 @@
 {
-  "name": "datepicker-dom",
+  "name": "@segor/simple-datepicker-dom",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "Sviridov-E",
+  "author": "Sviridov-E <sviridoveg@mail.ru>",
   "license": "MIT",
   "scripts": {
     "dev": "parcel index.html",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html",
+    "buildModule": "parcel build ./src/datepickerDomToGlobal.ts"
   },
   "dependencies": {
     "@segor/simple-datepicker": "^1.0.1",

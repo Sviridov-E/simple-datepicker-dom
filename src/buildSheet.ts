@@ -44,7 +44,7 @@ const days: { [key: string]: Array<string> } = {
 const defaultOptions: Options = {
     lang: "en",
     years: [1980, new Date().getFullYear()],
-    size: ""
+    size: "",
 };
 function buildSheet(opt: Options = {}): TableElements {
     const options = { ...defaultOptions, ...opt };
@@ -60,13 +60,19 @@ function buildSheet(opt: Options = {}): TableElements {
           <div class="month">
             <h4>Month</h4>
             <ul class="month-list list hidden">
-            ${months[options.lang].reduce((str, month, ind) => str + `<li data-value="${ind}">${month}</li>`, '')}
+            ${months[options.lang].reduce(
+                (str, month, ind) => str + `<li data-value="${ind}">${month}</li>`,
+                ""
+            )}
             </ul>
           </div>
           <div class="year">
             <h4>Year</h4>
             <ul class="year-list list hidden">
-            ${years.reduce((str, year) => str + `<li data-value="${year}">${String(year)}</li>`, '')}</ul>
+            ${years.reduce(
+                (str, year) => str + `<li data-value="${year}">${String(year)}</li>`,
+                ""
+            )}</ul>
           </div>
         </div>
         <div class="flipers">
@@ -78,7 +84,7 @@ function buildSheet(opt: Options = {}): TableElements {
       <table>
         <thead>
           <tr>
-          ${days[options.lang].reduce((str, day) => str + `<td>${day}</td>`, '')}
+          ${days[options.lang].reduce((str, day) => str + `<td>${day}</td>`, "")}
           </tr>
         </thead>
       </table>
@@ -105,8 +111,8 @@ function buildSheet(opt: Options = {}): TableElements {
     const tableElement: HTMLTableElement | null = datepickerElement.querySelector(".body table");
 
     const titles = {
-      months: months[options.lang]
-    }
+        months: months[options.lang],
+    };
 
     return { datepickerElement, actionElements, tableElement, titles };
 }

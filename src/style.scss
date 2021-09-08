@@ -9,9 +9,6 @@ $active-cell-color: #3478f5;
 
 $weekdays-color: #c6c6c6;
 $arrow-color: #3a77e4;
-body {
-    background: grey;
-}
 .datepicker {
     font-family: "Inter", Sans-serif;
     box-shadow: 2px 2px 15px 0px rgb(94, 94, 94);
@@ -61,8 +58,8 @@ body {
                 &:first-of-type {
                     margin-right: 7px;
                 }
-                padding: .3em .9em;
-                font-size: .9em;
+                padding: 0.3em 0.9em;
+                font-size: 0.9em;
             }
         }
     }
@@ -102,8 +99,8 @@ body {
                 &:first-of-type {
                     margin-right: 12px;
                 }
-                padding: .3em .9em;
-                font-size: .9em;
+                padding: 0.3em 0.9em;
+                font-size: 0.9em;
             }
         }
     }
@@ -292,8 +289,4 @@ body {
         height: 0;
         opacity: 0;
     }
-}
-
-input {
-    margin: 30px;
 }

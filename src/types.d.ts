@@ -28,6 +28,8 @@ export interface Options {
     showMonthTails?: boolean;
     size?: '' | 'large' | 'small';
     lang?: '' | 'en' | 'ru';
+    onOk?: (date: Date) => void | null;
+    onCancel?: () => void | null;
 }
 export interface MonthLists {
     [key: string]: Array<string>;

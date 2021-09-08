@@ -2,12 +2,15 @@ import DatepickerCore from "@segor/simple-datepicker";
 import { HTMLTableBody, Options, State, TableBodyCash, TableElements } from "./types";
 import buildSheet from "./buildSheet";
 import { MonthTails, Slice } from "@segor/simple-datepicker/dist/types/types";
+import "./style.scss";
 
 const defaultOptions: Options = {
     closeWhenSelected: false,
     showMonthTails: true,
     size: '',
-    lang: 'en'
+    lang: 'en',
+    onOk: null,
+    onCancel: null
 };
 class DatepickerDom {
     core: DatepickerCore;
@@ -16,8 +19,8 @@ class DatepickerDom {
     selectedCells: HTMLElement | null;
     params: Options;
     state: State;
-    root: HTMLElement;
-    constructor(root: HTMLElement, params?: Options) {
+    root: HTMLInputElement;
+    constructor(root: HTMLInputElement, params?: Options) {
         this.params = { ...defaultOptions, ...params };
         this.root = root;
         this.core = new DatepickerCore();
@@ -139,11 +142,21 @@ class DatepickerDom {
 
     // Triggers when an OK button is clicked
     submitHandler(): void {
-        alert(JSON.stringify(this.core.selectedDate || this.core.shownDate));
+        const date: Date = this.core.selectedDate[0] || this.core.selectedDate || this.core.shownDate[0] || this.core.shownDate;
+        if(!this.params.onOk) {
+            let formatter = new Intl.DateTimeFormat(this.params.lang);
+            this.root.value = formatter.format(date);
+            this.closeDatepicker()
+            return;
+        }
+        const cb = this.params.onOk;
+        cb(date);
+        this.closeDatepicker();
     }
 
     // Triggers when a Cancel button is clicked
     cancleHandler(): void {
+        this.core.selectedDate = null;
         this.closeDatepicker();
     }
 

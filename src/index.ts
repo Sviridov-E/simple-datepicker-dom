@@ -1,7 +1,5 @@
 import DatepickerDom from "./DatepickerDom";
-import "./style.scss";
 
-const app: HTMLElement = document.getElementById('app');
+const input: HTMLInputElement | undefined = document.querySelector("input#app");
 
-new DatepickerDom(app);
-
+new DatepickerDom(input, {lang: 'ru'});
