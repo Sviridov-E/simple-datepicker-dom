@@ -12,6 +12,7 @@ $arrow-color: #3a77e4;
 .datepicker {
     font-family: "Inter", Sans-serif;
     box-shadow: 2px 2px 15px 0px rgb(94, 94, 94);
+    color: black;
     height: 315px;
     width: 325px;
     position: absolute;
@@ -210,7 +211,7 @@ $arrow-color: #3a77e4;
                 opacity: 1;
             }
             td {
-                line-height: 2rem;
+                line-height: 2em;
                 width: 2.6em;
                 font-size: 1.1em;
                 transition: transform 0.1s 0s linear;

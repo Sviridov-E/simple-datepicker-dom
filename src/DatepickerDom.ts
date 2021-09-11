@@ -1,7 +1,7 @@
 import DatepickerCore from "@segor/simple-datepicker";
 import { HTMLTableBody, Options, State, TableBodyCash, TableElements } from "./types";
 import buildSheet from "./buildSheet";
-import { MonthTails, Slice } from "@segor/simple-datepicker/dist/types/types";
+import { DateRange, MonthTails, Slice } from "@segor/simple-datepicker/dist/types/types";
 import "./style.scss";
 
 const defaultOptions: Options = {
@@ -90,7 +90,7 @@ class DatepickerDom {
         cell.classList.add("selected-cell");
         this.selectedCells = cell;
 
-        if (this.params.closeWhenSelected) this.closeDatepicker();
+        if (this.params.closeWhenSelected) this.submitHandler();
     }
 
     // Updates title of year and month selectors
@@ -144,14 +144,19 @@ class DatepickerDom {
     submitHandler(): void {
         const date: Date = this.core.selectedDate[0] || this.core.selectedDate || this.core.shownDate[0] || this.core.shownDate;
         if(!this.params.onOk) {
-            let formatter = new Intl.DateTimeFormat(this.params.lang);
-            this.root.value = formatter.format(date);
+            renderValueToInput.call(this, date);
             this.closeDatepicker()
             return;
         }
+        renderValueToInput.call(this, date);
         const cb = this.params.onOk;
         cb(date);
         this.closeDatepicker();
+
+        function renderValueToInput(value: Date) {
+            let formatter = new Intl.DateTimeFormat(this.params.lang);
+            this.root.value = formatter.format(value);
+        }
     }
 
     // Triggers when a Cancel button is clicked
@@ -171,7 +176,9 @@ class DatepickerDom {
         this.tableBodyCash[`${month}${year}`] = tableBody;
         return tableBody;
     }
-
+    getSelectedDate(): Date | DateRange | null {
+        return this.core.selectedDate || null;
+    }
     // builds the DOM Table Body with dates
     _buildTableBody(slice: Slice, date: [number, number]): HTMLTableBody {
         const tableBody: HTMLTableSectionElement = document.createElement("tbody");

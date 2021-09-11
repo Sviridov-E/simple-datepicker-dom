@@ -43,19 +43,19 @@ const days: { [key: string]: Array<string> } = {
 
 const defaultOptions: Options = {
     lang: "en",
-    years: [1980, new Date().getFullYear()],
+    years: [new Date().getFullYear(), 1920],
     size: "",
 };
 function buildSheet(opt: Options = {}): TableElements {
     const options = { ...defaultOptions, ...opt };
 
     let years: number[] = [];
-    for (let i = 0; i <= options.years[1] - options.years[0]; ++i) {
-        years.push(options.years[0] + i);
+    for (let i = 0; i <= options.years[0] - options.years[1]; ++i) {
+        years.push(options.years[0] - i);
     }
 
     const template: string = `
-      <header class="head">
+      <div class="head">
         <div class="selectors">
           <div class="month">
             <h4>Month</h4>
@@ -79,8 +79,8 @@ function buildSheet(opt: Options = {}): TableElements {
           <button class="prev-month left"></button>
           <button class="next-month right"></button>
         </div>
-      </header>
-      <main class="body">
+      </div>
+      <div class="body">
       <table>
         <thead>
           <tr>
@@ -88,11 +88,11 @@ function buildSheet(opt: Options = {}): TableElements {
           </tr>
         </thead>
       </table>
-    </main>
-    <footer class="bottom">
+    </div>
+    <div class="bottom">
       <button class="ok-btn btn">Ok</button>
       <button class="cancel-btn btn">Cancel</button>
-    </footer>
+    </div>
   `;
     const datepickerElement: HTMLDivElement = document.createElement("div");
     datepickerElement.classList.add("datepicker");
