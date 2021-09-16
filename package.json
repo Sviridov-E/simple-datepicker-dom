@@ -1,6 +1,6 @@
 {
   "name": "@segor/simple-datepicker-dom",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "src/DatepickerDom",
   "author": "Sviridov-E <sviridoveg@mail.ru>",
   "license": "MIT",

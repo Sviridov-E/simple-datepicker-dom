@@ -161,8 +161,10 @@ class DatepickerDom {
 
     // Triggers when a Cancel button is clicked
     cancleHandler(): void {
+        const cb = this.params.onCancel;
         this.core.selectedDate = null;
         this.closeDatepicker();
+        cb()
     }
 
     // Returns the DOM table body from cash or calculates new
