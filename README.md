@@ -1,6 +1,7 @@
 # Simple Datepicker DOM
 
 [![npm](https://img.shields.io/npm/v/@segor/simple-datepicker?label=npm)](https://www.npmjs.com/package/@segor/simple-datepicker-dom) [![GitHub package.json version](https://img.shields.io/github/package-json/v/Sviridov-e/simple-datepicker-core?color=green&label=github)](https://github.com/Sviridov-E/simple-datepicker-dom)
+
 Нативный компонент для выбора даты
 ## Установка
 ```bash
