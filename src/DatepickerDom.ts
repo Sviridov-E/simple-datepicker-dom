@@ -150,7 +150,7 @@ class DatepickerDom {
         }
         renderValueToInput.call(this, date);
         const cb = this.params.onOk;
-        cb(date);
+        cb && cb(date);
         this.closeDatepicker();
 
         function renderValueToInput(value: Date) {
@@ -164,7 +164,7 @@ class DatepickerDom {
         const cb = this.params.onCancel;
         this.core.selectedDate = null;
         this.closeDatepicker();
-        cb()
+        cb && cb();
     }
 
     // Returns the DOM table body from cash or calculates new
@@ -248,16 +248,10 @@ class DatepickerDom {
     }
 
     // Removes table body
-    resetTableBody(cb: () => void): void {
+    resetTableBody(): void {
         const tbody: HTMLTableBody = this.pickerElements.tableElement?.querySelector("tbody");
         tbody?.classList.remove("visible");
-        tbody?.addEventListener("transitionend", deleteChangingClass);
-        function deleteChangingClass(e) {
-            if (e.target !== tbody) return;
-            tbody.removeEventListener("transitionend", deleteChangingClass);
-            tbody?.remove();
-            cb();
-        }
+        tbody?.remove();
     }
 
     // Creates and appends new table body
@@ -271,7 +265,8 @@ class DatepickerDom {
 
     // Removes table body, gets new and mounts;
     updateTableBody(): void {
-        this.resetTableBody(this.appendTableBody.bind(this));
+        this.resetTableBody();
+        this.appendTableBody();
     }
 
     toPosition(): void {
